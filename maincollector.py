@@ -10,23 +10,27 @@
 
 from collection import collector
 from paramchange import changeparam
-import threading
+from threading import Thread, Condition
 
 if __name__ == '__main__':
-	collector = collector.Collector()
+	lock = Condition()
+	collector = collector.Collector(lock)
 	changeparam = changeparam.changeparam()
 
 	threads = []
-	t1 = threading.Thread(target=collector.collectiondata())
+	t1 = Thread(target=collector.collectiondata)
 	threads.append(t1)
-	t2 = threading.Thread(target=changeparam.runchange())
+	# t3 = Thread(target=collector.collectiondata)
+	# threads.append(t3)
+	t2 = Thread(target=changeparam.runchange)
 	threads.append(t2)
 
 	for t in threads:
 		t.setDaemon(True)
 		t.start()
 
-	t.join()
+	for t in threads:
+		t.join()
 
 
 

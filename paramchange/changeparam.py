@@ -24,7 +24,6 @@ class changeparam(object):
 	def runchange(self):
 		while True:
 			#进行休眠时间
-			print('修改数据库参数')
 			time.sleep(int(self.sleeptime))
 			lenparams = len(self.params)
 			#随机获取一个参数值
@@ -35,7 +34,6 @@ class changeparam(object):
 			#随机获取一个参数值
 			paramvalue = paramvalues[random.randint(0, lenparamvalues-1)].strip()
 			sql = "alter system set " + paramname + " = " + paramvalue
-			print(sql)
 			#执行参数修改
 			conn = oracleutils.connoracle()
 			conn.exec_sql(sql)
